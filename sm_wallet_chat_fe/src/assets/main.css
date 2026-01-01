@@ -1,0 +1,103 @@
+/* Base CSS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.shell {
+    max-width: 1512px;
+    padding-inline: 24px;
+    margin: 0 auto;
+    position: relative;
+}
+
+@media screen and (max-width: 767px) {
+    .shell {
+        padding-inline: 24px;
+    }
+}
+
+.image-fit {
+    overflow: hidden;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.image-fit img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+:root {
+    --font-weight-base: 400;
+    --ff-base: 'Inter';
+    --c-backgound: #0F172A;
+    --c-grayed: #1E293B;
+    --c-blue: #3744AB;
+    --c-base: #6784C1;
+    --c-gray: #CBD5E1;
+
+    --c-black: #232323;
+    --c-white: #FFF;
+    --c-green: #25b700;
+    --c-red: #E40006;
+}
+
+body {
+    font-family: var(--ff-base);
+    background-color: var(--c-backgound);
+    font-size: 18px;
+    font-weight: var(--font-weight-base);
+
+    &:has(.popup.open),
+    &:has(.dialog-popup.open) {
+        overflow: hidden;
+    }
+
+
+    &:has(.dialog-popup.open):after,
+    &:has(.popup.open):after {
+        content: '';
+        position: fixed;
+        z-index: 100;
+        inset: 0;
+        background: var(--c-black);
+        opacity: .25;
+    }
+
+    a{
+        text-decoration: none;
+        color: var(--c-black);
+        background: var(--c-white);
+        padding: 10px;
+        border-radius: 10px;
+    }
+}
+
+h1{
+    font-size: 30px;
+    color: var(--c-gray);
+}
+
+.success__message{
+    margin-block: 100px;
+    width: fit-content;
+    background: var(--c-green);
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--c-white);
+    align-self: center;
+}
+
+.custom-form {
+    padding: 12px 24px;
+    border-radius: 12px;
+    background-color: var(--c-grayed);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
