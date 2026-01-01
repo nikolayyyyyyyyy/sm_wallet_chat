@@ -10,19 +10,23 @@ use Illuminate\Support\Facades\Storage;
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         $user = User::where('id', $request->user()->id)
+            ->with(['accounts', 'accounts.currency', 'accounts.account_type'])
             ->first(); 
         
         return response()->json([
             'id' => $user->id,
             'username' => $user->username,
             'email' => $user->email,
-            'profile_photo' => $user->profile_photo != null ? asset($user->profile_photo) : null
+            'profile_photo' => $user->profile_photo != null ? asset($user->profile_photo) : null,
+            'role_id' => $user->role_id,
+            'accounts' => $user->accounts
         ], 200);
     });
 
     //User routes
     Route::post('/users/{id}/update', [UserController::class, 'updateUser']);
     Route::delete('/users/{id}/delete', [UserController::class, 'deleteUser']);
+    
     //Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 });

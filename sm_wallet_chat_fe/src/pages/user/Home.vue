@@ -1,9 +1,13 @@
 <script setup>
+import Load from '@/components/Load.vue';
+import User from '@/layouts/User.vue';
 import { onMounted, ref } from 'vue';
 
-const user = ref({});
+const user = ref();
+const is_loading = ref(false);
 
 onMounted(async () => {
+    is_loading.value = true;
     user.value = await (await fetch('http://127.0.0.1:8000/api/user',{
         method: 'GET',
         headers:{
@@ -12,9 +16,22 @@ onMounted(async () => {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })).json();
+    is_loading.value = false;
 });
 </script>
 
 <template>
-    <p v-if="user?.email">Wellcome {{ user.email }}</p>
+    <section class="section-dashboard">
+        <div class="section__inner shell">
+            <User v-if="!is_loading && user?.role_id == 1" :user/>
+
+            <Load v-if="is_loading" />
+        </div>
+    </section>
 </template>
+
+<style scoped lang="scss">
+.section-dashboard{
+    margin-block: 32px;
+}
+</style>

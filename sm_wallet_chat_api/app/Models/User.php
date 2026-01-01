@@ -56,7 +56,7 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function cards()
+    public function accounts()
     {
         return $this->hasMany(Account::class, 'user_id', 'id');
     }
