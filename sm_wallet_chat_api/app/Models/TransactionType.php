@@ -6,5 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionType extends Model
 {
-    //
+    public $timestamps = false;
+
+    protected $fillable = [
+        'transaction_type'
+    ];
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }
