@@ -8,10 +8,6 @@ const props = defineProps({
     title: {
         type: String,
         required: false
-    },
-    noExitIcon: {
-        type: Boolean,
-        default: false
     }
 })
 
@@ -61,7 +57,7 @@ onBeforeUnmount(() => {
                     {{ title }}
                 </h1>
 
-                <div v-if="!noExitIcon" class="popup__close" @click="close">
+                <div class="popup__close" @click="close">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
                         <linearGradient id="hbE9Evnj3wAjjA2RX0We2a_OZuepOQd0omj_gr1" x1="7.534" x2="27.557" y1="7.534"
                             y2="27.557" gradientUnits="userSpaceOnUse">

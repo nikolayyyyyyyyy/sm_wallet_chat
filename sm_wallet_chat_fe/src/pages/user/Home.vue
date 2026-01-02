@@ -23,7 +23,7 @@ onMounted(async () => {
 <template>
     <section class="section-dashboard">
         <div class="section__inner shell">
-            <User v-if="!is_loading && user?.role_id == 1" :user/>
+            <User v-if="!is_loading && user?.role_id == 2" :user/>
 
             <Load v-if="is_loading" />
         </div>

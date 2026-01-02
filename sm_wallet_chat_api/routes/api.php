@@ -4,8 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FavoriteController;
 use App\Models\User;
+use App\Models\Message;
 use Illuminate\Support\Facades\Storage;
+use App\Events\MessageSent;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -24,35 +27,49 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     //User routes
+    Route::get('/users/{id}', [UserController::class, 'getUser']);
     Route::post('/users/{id}/update', [UserController::class, 'updateUser']);
     Route::delete('/users/{id}/delete', [UserController::class, 'deleteUser']);
+    Route::post('/users/check-email', [UserController::class, 'check_user_email']);
+
+    // Favorites
+    Route::post('/favorites', [FavoriteController::class, 'store_favorite']);
+    Route::get('/favorites-all', [FavoriteController::class, 'getFavoriteUsers']);
     
     //Logout
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    //Messages
+    Route::get('/messages/{id}', function (Request $request, string $id) {
+        $user_id = $request->user()->id;
+        $other_user_id = User::where('id', '=', $id)
+            ->first()->id;
+
+        $messages = Message::where(function ($q) use ($user_id, $other_user_id) {
+            $q->where('sender_id', '=', $user_id)
+                ->where('receiver_id', '=', $other_user_id);
+        })->orWhere(function ($q) use ($user_id, $other_user_id) {
+            $q->where('sender_id', '=', $other_user_id)
+                ->where('receiver_id', '=', $user_id);
+        })
+        ->with(['sender', 'receiver'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        return response()->json($messages, 200);
+    })->middleware('auth:sanctum');
+
+    Route::post('/messages/{id}', function (Request $request, string $id) {
+        $message = Message::create([
+            'sender_id' => $request->user()->id,
+            'receiver_id' => $id,
+            'message' => $request->message
+        ]);
+
+        broadcast(new MessageSent($message, $id))->toOthers();
+
+        return response()->json($message, 200);
+    })->middleware('auth:sanctum');;
 });
 
 Route::post('/login', [AuthController::class, 'login']);
-
-// Route::get('/messages', function (Request $request) {
-//     $user_id = $request->user()->id;
-//     $other_user_id = User::whereNot('id', '=', $user_id)
-//         ->first()->id;
-
-//     $messages = Message::where(function ($q) use ($user_id, $other_user_id) {
-//         $q->where('sender_id', '=', $user_id)
-//             ->where('receiver_id', '=', $other_user_id);
-//     })->orWhere(function ($q) use ($user_id, $other_user_id) {
-//         $q->where('sender_id', '=', $other_user_id)
-//             ->where('receiver_id', '=', $user_id);
-//     })
-//     ->with(['sender', 'receiver'])
-//     ->orderBy('created_at', 'desc')
-//     ->get();
-
-//     return response()->json($messages, 200);
-// })->middleware('auth:sanctum');
-
-// Route::post('/messages', function (Request $request) {
-
-//     broadcast(new MessageSent($request->message, $request->receiver_id))->toOthers();
-// })->middleware('auth:sanctum');;

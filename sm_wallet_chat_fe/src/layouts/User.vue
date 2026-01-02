@@ -3,19 +3,58 @@ import Account from '@/components/Account.vue';
 import Button from '@/components/Button.vue';
 import FavoritePopup from '@/components/FavoritePopup.vue';
 import InputComponent from '@/components/InputComponent.vue';
+import Load from '@/components/Load.vue';
 import NoResultFount from '@/components/NoResultFount.vue';
 import UserActions from '@/components/UserActions.vue';
 import MyAccounts from '@/sections/MyAccounts.vue';
+import User from '@/components/User.vue';
 import { ref } from 'vue';
-
 defineProps({
     user:{
         type: Object,
         required: true
     }
 });
+
+const is_loading = ref(false);
+const is_fetching = ref(false);
 const show_popup = ref(false);
-const search_user = ref();
+const search_user = ref({
+    email: ''
+});
+const error = ref('');
+const found_user = ref(null);
+const findUser = async () => {
+    if(is_fetching.value) return;
+    is_fetching.value = true;
+    is_loading.value = true;
+
+    const response = await fetch(`http://127.0.0.1:8000/api/users/check-email`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ email: search_user.value.email })
+    });
+
+    if(response.ok){
+        found_user.value = await response.json();
+        error.value = '';
+    }else {
+        const err = await response.json();
+        error.value = err.errors;
+    }
+    is_loading.value = false;
+    is_fetching.value = false;
+};
+
+function clearForm(){
+    found_user.value = null;
+    search_user.value.email = '';
+    error.value = '';
+}
 </script>
 
 <template>
@@ -38,10 +77,16 @@ const search_user = ref();
 
             <UserActions v-model="show_popup" />
 
-            <FavoritePopup v-model="show_popup" title="Намери приятели">
-                <InputComponent class="search_input_user" label="имейл" v-model="search_user" />
+            <FavoritePopup @empty-model-value="clearForm" v-model="show_popup" title="Намери приятели">
+                <InputComponent v-if="!is_loading" class="search_input_user" label="имейл" v-model="search_user.email" />
 
-                <Button class="search_btn" text="Намери"/>
+                <User v-if="found_user && !is_loading && !error" :user="found_user" />
+                
+                <p v-if="error?.email && !is_loading" class="error__message">{{ error.email[0] }}</p>
+
+                <Button v-if="!is_loading" @click="findUser" class="search_btn" text="Намери"/>
+
+                <Load v-if="is_loading" />
             </FavoritePopup>
         </div>
     </section>
@@ -52,6 +97,13 @@ const search_user = ref();
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    .error__message{
+        font-size: 12px;
+        color: var(--c-red);
+        font-weight: 600;
+    }
+
     .user__info{
         display: flex;
         align-items: center;
@@ -64,6 +116,10 @@ const search_user = ref();
             border: 1px solid var(--c-base);
             border-radius: 10px;
         }
+
+        p{
+            cursor: default;
+        }
     }
     .err{
         margin-block: 32px;
@@ -75,7 +131,7 @@ const search_user = ref();
 
     .search_btn{
         width: 300px;
-        margin-top: 30px;
+        margin-top: 10px;
     }
 }
 </style>

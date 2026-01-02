@@ -27,7 +27,7 @@ const model = defineModel();
             <p>Добави <br> в любими</p>
         </div>
 
-        <div class="user__link">
+        <RouterLink to="/favorites" class="user__link">
             <div class="send-message-icon">
                 <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <g fill="none">
@@ -51,7 +51,7 @@ const model = defineModel();
                 </svg>
             </div>
             <p>Изпрати <br> съобщение</p>
-        </div>
+        </RouterLink>
     </div>
 </template>
 
@@ -68,6 +68,12 @@ const model = defineModel();
         gap: 4px;
         color: var(--c-base);
         font-weight: 500;
+        background: transparent;
+        
+        p{
+            cursor: default;
+            text-align: center;
+        }
     }
 
     .send-message-icon,
@@ -87,10 +93,6 @@ const model = defineModel();
 
     .add-to-favorite-icon{
         background: rgb(130, 130, 48);
-    }
-
-    p{
-        text-align: center;
     }
 }
 </style>

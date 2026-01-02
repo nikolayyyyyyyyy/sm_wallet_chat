@@ -6,9 +6,25 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Favorite;
 
 class UserController extends Controller
 {
+    public function getUser(string $id)
+    {
+        $user = User::where('id', '=', $id)->first();
+        if($user == null){
+            return response()->json(['message' => 'User not found'], 422);
+        }
+
+        return response()->json([
+            'id' => $user->id,
+            'username' => $user->username,
+            'email' => $user->email,
+            'profile_photo' => $user->profile_photo != null ? asset($user->profile_photo) : null
+        ], 200);
+    }
+
     public function deleteUser(string $id)
     {
         $user = User::where('id', '=', $id)->first();
@@ -72,5 +88,44 @@ class UserController extends Controller
         $user->save();
 
         return response()->json(status: 201);
+    }
+
+    public function check_user_email(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ], [
+            'email.required' => 'Полето е задължително',
+            'email.email' => 'Имейлът трябва да е валиден'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::where('email', $request->input('email'))
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'errors' => [
+                    'email' => ['Потребител с този имейл не е намерен']
+                ]
+            ], 422);
+        }
+
+        $currentUserId = $request->user()->id;
+        $user->is_favorited = Favorite::where('user_id', $currentUserId)
+            ->where('liked_user_id', $user->id)
+            ->exists();
+
+        return response()->json([
+            'id' => $user->id,
+            'username' => $user->username,
+            'email' => $user->email,
+            'profile_photo' => $user->profile_photo ? asset($user->profile_photo) : null,
+            'is_favorited' => $user->is_favorited
+        ], 200);
     }
 }

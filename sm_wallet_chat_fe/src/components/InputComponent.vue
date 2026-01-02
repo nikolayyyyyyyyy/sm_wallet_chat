@@ -2,7 +2,7 @@
 const props = defineProps({
     label:{
         type: String,
-        required: true
+        required: false
     },
     error:{
         type: String,
@@ -15,7 +15,7 @@ const model = defineModel();
 
 <template>
     <div class="input">
-        <label class="input__title" for="input">
+        <label v-if="label" class="input__title" for="input">
             {{ label }}
         </label>
 
