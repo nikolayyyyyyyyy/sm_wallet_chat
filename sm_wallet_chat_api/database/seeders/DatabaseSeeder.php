@@ -60,11 +60,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'niki@niki',
             'password' => '11111',
             'profile_photo' => null,
-            'role_id' => 1 
+            'role_id' => 2
         ]);
         User::create([
-            'username' => 'Naskooo',
-            'email' => 'nasi@nasi',
+            'username' => 'Beba',
+            'email' => 'beba@beba',
             'password' => '11111',
             'profile_photo' => null,
             'role_id' => 2 
