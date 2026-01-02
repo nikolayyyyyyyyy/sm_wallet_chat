@@ -36,25 +36,6 @@ const sendMessage = async () => {
     messages.value.push(new_message);
 };
 
-const other_user_typing = ref(false);
-
-const sendTypingWhisper = async () =>{
-    echo.private(`chat.${props.id}`)
-        .whisper('typing', {
-            user_id: current_user.value.id,
-            username: current_user.value.username
-        });
-
-    clearTimeout(typing_timeout);
-    
-    typingTimeout = setTimeout(() => {
-        echo.private(`chat.${props.id}`)
-            .whisper('stoppedTyping', {
-                user_id: current_user.value.id
-            });
-    }, 2000);
-}
-
 onMounted(async () => { 
     is_loading.value = true;
 
@@ -114,7 +95,7 @@ onMounted(async () => {
                 </div>
 
                 <form class="send_message" @submit.prevent="sendMessage">
-                    <InputComponent class="message_text" v-model="message" @input="sendTypingWhisper"/>
+                    <InputComponent class="message_text" v-model="message"/>
 
                     <input type="submit">
                 </form>
