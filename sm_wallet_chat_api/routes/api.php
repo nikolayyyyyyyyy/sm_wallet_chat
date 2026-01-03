@@ -7,9 +7,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AccountController;
+
 use App\Models\User;
 use App\Models\Message;
-use Illuminate\Support\Facades\Storage;
 use App\Events\MessageSent;
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -28,6 +29,9 @@ Route::middleware('auth:sanctum')->group(function () {
         ], 200);
     });
 
+    // Account
+    Route::get('/accounts/{id}', [AccountController::class, 'getAccount']);
+
     //User
     Route::get('/users/{id}', [UserController::class, 'getUser']);
     Route::post('/users/{id}/update', [UserController::class, 'updateUser']);
@@ -42,6 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/transaction-types', [TransactionTypeController::class, 'getTransactionTypes']);
     
     // Transaction
+    Route::get('/transactions/{id}/account', [TransactionController::class, 'getTransactionsForAccount']);
     Route::post('/transactions', [TransactionController::class, 'storeTransaction']);
 
     //Logout

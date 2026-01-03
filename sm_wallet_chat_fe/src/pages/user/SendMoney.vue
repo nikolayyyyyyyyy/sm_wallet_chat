@@ -14,7 +14,7 @@ const user = ref();
 const is_loading = ref();
 const { getData } = get();
 const transaction = ref({
-    account_sender_id: 1,
+    account_sender_id: '',
     account_receiver_number: '',
     amount: '',
     note: '',
@@ -83,7 +83,7 @@ onMounted(async () => {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })).json();
-
+    transaction.value.account_sender_id = user.value.accounts[0].id;
     transaction_types.value = await getData('transaction-types');
     is_loading.value = false;
 });

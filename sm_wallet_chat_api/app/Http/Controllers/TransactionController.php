@@ -8,6 +8,27 @@ use App\Models\Account;
 
 class TransactionController extends Controller
 {
+    public function getTransactionsForAccount(string $id)
+    {
+        $transactions = Transaction::where('account_sender_id', '=', $id)
+            ->orWhere('account_receiver_id', '=', $id)
+            ->orderBy('id', 'desc')
+            ->get();
+
+            $transactions->load([
+                'sender_account',
+                'receiver_account',
+                'transaction_type',
+                'receiver_account.currency',
+                'receiver_account.account_type',
+                'sender_account.currency',
+                'sender_account.account_type',
+                'receiver_account.user',
+                'sender_account.user',
+            ]);
+        return response()->json($transactions);
+    }
+
     public function storeTransaction(Request $request)
     {
         $validator = Validator::make(
