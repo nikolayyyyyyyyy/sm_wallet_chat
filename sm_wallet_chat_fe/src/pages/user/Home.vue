@@ -1,5 +1,6 @@
 <script setup>
 import Load from '@/components/Load.vue';
+import Admin from '@/layouts/Admin.vue';
 import User from '@/layouts/User.vue';
 import { onMounted, ref } from 'vue';
 
@@ -25,6 +26,8 @@ onMounted(async () => {
         <div class="section__inner shell">
             <User v-if="!is_loading && user?.role_id == 2" :user/>
 
+            <Admin v-if="!is_loading && user?.role_id == 1" :user />
+            
             <Load v-if="is_loading" />
         </div>
     </section>

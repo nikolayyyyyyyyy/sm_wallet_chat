@@ -56,6 +56,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'username' => 'admin',
+            'email' => 'admin@admin',
+            'password' => '11111',
+            'profile_photo' => null,
+            'role_id' => 1
+        ]);
+        User::create([
             'username' => 'Nikolayyy',
             'email' => 'niki@niki',
             'password' => '11111',
