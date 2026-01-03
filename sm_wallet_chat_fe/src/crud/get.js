@@ -15,8 +15,24 @@ const getItem = async (slug, id) => {
     return user; 
 };
 
+const getData = async (slug) => {
+    const response = await fetch(`${base_path}/${slug}`,{
+        method: 'GET',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+
+    const data = await response.json();
+
+    return data;
+};
+
 export default function get() {
     return {
-        getItem
+        getItem,
+        getData
     }
 }

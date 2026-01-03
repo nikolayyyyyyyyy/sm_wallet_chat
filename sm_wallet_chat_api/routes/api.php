@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\TransactionTypeController;
+use App\Http\Controllers\TransactionController;
 use App\Models\User;
 use App\Models\Message;
 use Illuminate\Support\Facades\Storage;
@@ -26,16 +28,22 @@ Route::middleware('auth:sanctum')->group(function () {
         ], 200);
     });
 
-    //User routes
+    //User
     Route::get('/users/{id}', [UserController::class, 'getUser']);
     Route::post('/users/{id}/update', [UserController::class, 'updateUser']);
     Route::delete('/users/{id}/delete', [UserController::class, 'deleteUser']);
     Route::post('/users/check-email', [UserController::class, 'check_user_email']);
 
-    // Favorites
+    // Favorite
     Route::post('/favorites', [FavoriteController::class, 'store_favorite']);
     Route::get('/favorites-all', [FavoriteController::class, 'getFavoriteUsers']);
+
+    // Transaction Type
+    Route::get('/transaction-types', [TransactionTypeController::class, 'getTransactionTypes']);
     
+    // Transaction
+    Route::post('/transactions', [TransactionController::class, 'storeTransaction']);
+
     //Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -53,7 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
                 ->where('receiver_id', '=', $user_id);
         })
         ->with(['sender', 'receiver'])
-        ->orderBy('created_at', 'desc')
+        ->orderBy('created_at', 'asc')
         ->get();
 
         return response()->json($messages, 200);

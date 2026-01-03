@@ -4,7 +4,7 @@ const model = defineModel();
 
 <template>
     <div class="section__user-link">
-        <div class="user__link">
+        <RouterLink to="/send-money" class="user__link">
             <div class="send-money-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path
@@ -15,10 +15,10 @@ const model = defineModel();
                 </svg>
             </div>
             <p>Изпрати</p>
-        </div>
+        </RouterLink>
 
 
-        <div @click="model = true" class="user__link">
+        <div @click="model = true" class="user__link add-to-favorites">
             <div class="add-to-favorite-icon">
                 <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                     <path fill="#ffd54f" d="m16 24l10 6l-4-10l8-8l-10-.032L16 2l-4 10H2l8 8l-4 10Z" />
@@ -71,7 +71,6 @@ const model = defineModel();
         background: transparent;
         
         p{
-            cursor: default;
             text-align: center;
         }
     }
@@ -93,6 +92,10 @@ const model = defineModel();
 
     .add-to-favorite-icon{
         background: rgb(130, 130, 48);
+    }
+
+    .add-to-favorites{
+        cursor: pointer;
     }
 }
 </style>

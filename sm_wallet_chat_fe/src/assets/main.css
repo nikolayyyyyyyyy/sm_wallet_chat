@@ -85,6 +85,15 @@ h1{
     color: var(--c-gray);
 }
 
+.error__message{ 
+    padding: 10px;
+    background: var(--c-red);
+    border-radius: 10px;
+    width: fit-content;
+    align-self: center;
+    color: var(--c-white);
+}
+
 .success__message{
     margin-block: 100px;
     width: fit-content;

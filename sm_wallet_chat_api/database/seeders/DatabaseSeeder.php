@@ -79,6 +79,14 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1
         ]);
         Account::create([
+            'account_number' => 'BGN45DFR45',
+            'amount' => 13000,
+            'interest' => 0.1,
+            'currency_id' => 1,
+            'account_type_id' => 1,
+            'user_id' => 1
+        ]);
+        Account::create([
             'account_number' => 'BGN77HDF56',
             'amount' => 10000,
             'interest' => 0.1,

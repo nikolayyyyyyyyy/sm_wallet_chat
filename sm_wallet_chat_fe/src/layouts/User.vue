@@ -69,8 +69,10 @@ function clearForm(){
 
             <MyAccounts v-if="user.accounts.length > 0"
                 :total_price="user.accounts.reduce((t, c) => t + Number(c.amount), 0)">
-                <Account v-for="(account, index) in user.accounts"
-                     :account :class="{ light: index % 2 == 0, gray: index % 2 == 1 }"/>
+                <RouterLink v-for="(account, index) in user.accounts" :to="{name: 'account.trasnactions', params: {id: account.id}, query: {index}}" class="account__link">
+                    <Account :account
+                        :class="{ light: index % 2 == 0, gray: index % 2 == 1 }" />
+                </RouterLink>
             </MyAccounts>
 
             <NoResultFount v-else class="err" text="Нямате акаунти за момента." />
@@ -97,12 +99,6 @@ function clearForm(){
     display: flex;
     flex-direction: column;
     gap: 20px;
-
-    .error__message{
-        font-size: 12px;
-        color: var(--c-red);
-        font-weight: 600;
-    }
 
     .user__info{
         display: flex;
@@ -132,6 +128,10 @@ function clearForm(){
     .search_btn{
         width: 300px;
         margin-top: 10px;
+    }
+
+    .account__link{
+        background: none;
     }
 }
 </style>
