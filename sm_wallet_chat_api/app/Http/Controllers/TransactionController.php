@@ -37,7 +37,7 @@ class TransactionController extends Controller
                 'amount' => 'required|numeric',
                 'note' => 'nullable|string|max:255',
                 'transaction_type_id' => 'required|integer|exists:transaction_types,id',
-                'account_sender_number' => 'nullable|exists:accounts,account_number',
+                'account_sender_number' => 'sometimes|required|exists:accounts,account_number',
                 'account_sender_id' => 'nullable|exists:accounts,id',
                 'account_receiver_number' => 'required|exists:accounts,account_number',
             ],

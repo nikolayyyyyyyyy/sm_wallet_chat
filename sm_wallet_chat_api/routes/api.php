@@ -31,15 +31,20 @@ Route::middleware('auth:sanctum')->group(function () {
         ], 200);
     });
     // Account Type
+    Route::get('/account-types', [AccountTypeController::class, 'getAccountTypes']);
     Route::post('/account-types', [AccountTypeController::class, 'storeAccountType']);
 
     // Currency
+    Route::get('/currencies', [CurrencyController::class, 'getCurrencies']);
     Route::post('/currencies', [CurrencyController::class, 'storeCurrency']);
 
     // Account
     Route::get('/accounts/{id}', [AccountController::class, 'getAccount']);
+    Route::post('/accounts', [AccountController::class, 'storeAccount']);
 
     //User
+    Route::get('/users', [UserController::class, 'getUsers']);
+    Route::post('/users', [UserController::class, 'storeUser']);
     Route::get('/users/{id}', [UserController::class, 'getUser']);
     Route::post('/users/{id}/update', [UserController::class, 'updateUser']);
     Route::delete('/users/{id}/delete', [UserController::class, 'deleteUser']);

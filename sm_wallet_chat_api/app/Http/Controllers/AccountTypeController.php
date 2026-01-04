@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Validator;
 
 class AccountTypeController extends Controller
 {
+    public function getAccountTypes()
+    {
+        $account_types = AccountType::all();
+
+        return response()->json($account_types, 200);
+    }
+
     public function storeAccountType(Request $request)
     {
         $validator = Validator::make($request->all(),[

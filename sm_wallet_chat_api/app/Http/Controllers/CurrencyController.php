@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Validator;
 
 class CurrencyController extends Controller
 {
+    public function getCurrencies()
+    {
+        $currencies = Currency::all();
+
+        return response()->json($currencies, 200);
+    }
+
     public function storeCurrency(Request $request)
     {
         $validate = Validator::make($request->all(),[

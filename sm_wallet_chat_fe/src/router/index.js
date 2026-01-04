@@ -1,3 +1,4 @@
+import User from '@/pages/admin/User.vue'
 import AccountType from '@/pages/admin/AccountType.vue'
 import Currency from '@/pages/admin/Currency.vue'
 import TransactionType from '@/pages/admin/TransactionType.vue'
@@ -11,6 +12,8 @@ import Home from '@/pages/user/Home.vue'
 import Profile from '@/pages/user/Profile.vue'
 import SendMoney from '@/pages/user/SendMoney.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import Account from '@/pages/admin/Account.vue'
+import Transaction from '@/pages/admin/Transaction.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +29,10 @@ const router = createRouter({
     { path: '/account/:id/transactions', name: 'account.trasnactions' , component: AccountTransactions, props: true },
     { path: '/currency', component: Currency },
     { path: '/account-type', component: AccountType },
-    { path: '/transaction-type', component: TransactionType }
+    { path: '/transaction-type', component: TransactionType },
+    { path: '/users', component: User },
+    { path: '/accounts', component: Account },
+    { path: '/transactions', component: Transaction }
   ],
 })
 

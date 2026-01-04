@@ -10,6 +10,37 @@ use App\Models\Favorite;
 
 class UserController extends Controller
 {
+    public function getUsers()
+    {
+        $users = User::all();
+
+        return response()->json($users, 200);
+    }
+
+    public function storeUser(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'username' => 'required|max:30',
+            'email' => 'required|unique:users,email',
+            'password' => 'required',
+            'role_id' => 'required'
+        ],[
+            'username.required' => 'Полето е задължително.',
+            'username.max' => 'Полето не може да е до 30 символа.',
+            'email.required' => 'Полето е задължително.',
+            'email.unique' => 'Има добавен потребител с този имейл.',
+            'password.required' => 'Полето е задължително.',
+            'role_id.required' => 'Полето е задължително.'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+    }
+
     public function getUser(string $id)
     {
         $user = User::where('id', '=', $id)->first();
