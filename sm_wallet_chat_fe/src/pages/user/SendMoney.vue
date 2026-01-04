@@ -4,6 +4,7 @@ import Button from '@/components/Button.vue';
 import GoToArrow from '@/components/GoToArrow.vue';
 import InputComponent from '@/components/InputComponent.vue';
 import Load from '@/components/Load.vue';
+import NoResultFount from '@/components/NoResultFount.vue';
 import Select from '@/components/Select.vue';
 import TextArea from '@/components/TextArea.vue';
 import { store } from '@/crud/create';
@@ -83,7 +84,10 @@ onMounted(async () => {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })).json();
-    transaction.value.account_sender_id = user.value.accounts[0].id;
+
+    if(user.value.accounts[0]){
+        transaction.value.account_sender_id = user.value.accounts[0].id;
+    }
     transaction_types.value = await getData('transaction-types');
     is_loading.value = false;
 });
@@ -98,7 +102,7 @@ onMounted(async () => {
                 <h1>Превод</h1>
             </div>
 
-            <div v-if="!is_loading && user" class="section__content">
+            <div v-if="!is_loading && user && user?.accounts?.length > 0" class="section__content">
                 <div class="section__cards custom-form">
                     <label class="content__card" v-for="(account, index) in user.accounts" :key="account.id" :for="'card-' + account.id">
                         <div class="section__radio-btn" :class="{ selected: transaction.account_sender_id === account.id }">
@@ -135,6 +139,7 @@ onMounted(async () => {
                 </form>
             </div>
 
+            <NoResultFount class="empty" v-if="user?.accounts?.length == 0 && !is_loading" text="Нямате сметки." />
             <p v-if="success_message" class="success__message">Успешна транзакция</p>
             <p v-if="same_account_err" class="error__message">{{ other_err }}</p>
             <p v-if="not_enought_money_err" class="error__message">{{ other_err }}</p>
@@ -191,6 +196,10 @@ onMounted(async () => {
     .account__info-top{
         display: flex;
         gap: 20px;
+    }
+
+    .empty{
+        align-self: center;
     }
 }
 </style>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->string('profile_photo')->nullable(true);
             $table->foreignId('role_id')->constrained('roles');
+            $table->softDeletes();
             $table->timestamps();
         });
 

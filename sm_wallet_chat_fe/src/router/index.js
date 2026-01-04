@@ -1,5 +1,6 @@
 import Login from '@/pages/auth/Login.vue'
 import Logout from '@/pages/auth/Logout.vue'
+import Register from '@/pages/auth/Register.vue'
 import AccountTransactions from '@/pages/user/AccountTransactions.vue'
 import Chat from '@/pages/user/Chat.vue'
 import Favorites from '@/pages/user/Favorites.vue'
@@ -12,6 +13,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/login', component: Login },
+    { path: '/register', component: Register},
     { path: '/', component: Home },
     { path: '/profile', component: Profile },
     { path: '/logout', component: Logout },

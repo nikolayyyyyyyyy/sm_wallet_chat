@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
             'interest' => 0.1,
             'currency_id' => 1,
             'account_type_id' => 1,
-            'user_id' => 1
+            'user_id' => 2
         ]);
         Account::create([
             'account_number' => 'BGN45DFR45',
@@ -91,7 +91,7 @@ class DatabaseSeeder extends Seeder
             'interest' => 0.1,
             'currency_id' => 1,
             'account_type_id' => 1,
-            'user_id' => 1
+            'user_id' => 2
         ]);
         Account::create([
             'account_number' => 'BGN77HDF56',
@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
             'interest' => 0.1,
             'currency_id' => 1,
             'account_type_id' => 2,
-            'user_id' => 2
+            'user_id' => 3
         ]);
     }
 }
