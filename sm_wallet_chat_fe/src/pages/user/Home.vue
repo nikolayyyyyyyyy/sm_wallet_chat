@@ -26,7 +26,7 @@ onMounted(async () => {
         <div class="section__inner shell">
             <User v-if="!is_loading && user?.role_id == 2" :user/>
 
-            <Admin v-if="!is_loading && user?.role_id == 1" :user />
+            <Admin v-if="!is_loading && user?.role_id == 1" />
             
             <Load v-if="is_loading" />
         </div>

@@ -1,3 +1,6 @@
+import AccountType from '@/pages/admin/AccountType.vue'
+import Currency from '@/pages/admin/Currency.vue'
+import TransactionType from '@/pages/admin/TransactionType.vue'
 import Login from '@/pages/auth/Login.vue'
 import Logout from '@/pages/auth/Logout.vue'
 import Register from '@/pages/auth/Register.vue'
@@ -20,7 +23,10 @@ const router = createRouter({
     { path: '/favorites', component: Favorites },
     { path: '/chat/:id', name: 'users.chat', component: Chat, props: true },
     { path: '/send-money', component: SendMoney, props: true },
-    { path: '/account/:id/transactions', name: 'account.trasnactions' , component: AccountTransactions, props: true }
+    { path: '/account/:id/transactions', name: 'account.trasnactions' , component: AccountTransactions, props: true },
+    { path: '/currency', component: Currency },
+    { path: '/account-type', component: AccountType },
+    { path: '/transaction-type', component: TransactionType }
   ],
 })
 

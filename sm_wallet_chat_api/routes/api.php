@@ -12,6 +12,8 @@ use App\Http\Controllers\AccountController;
 use App\Models\User;
 use App\Models\Message;
 use App\Events\MessageSent;
+use App\Http\Controllers\AccountTypeController;
+use App\Http\Controllers\CurrencyController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -28,6 +30,11 @@ Route::middleware('auth:sanctum')->group(function () {
             'accounts' => $user->accounts
         ], 200);
     });
+    // Account Type
+    Route::post('/account-types', [AccountTypeController::class, 'storeAccountType']);
+
+    // Currency
+    Route::post('/currencies', [CurrencyController::class, 'storeCurrency']);
 
     // Account
     Route::get('/accounts/{id}', [AccountController::class, 'getAccount']);
@@ -43,6 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/favorites-all', [FavoriteController::class, 'getFavoriteUsers']);
 
     // Transaction Type
+    Route::post('/transaction-types', [TransactionTypeController::class, 'storeTransactionType']);
     Route::get('/transaction-types', [TransactionTypeController::class, 'getTransactionTypes']);
     
     // Transaction

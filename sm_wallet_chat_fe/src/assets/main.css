@@ -122,7 +122,7 @@ h1{
 }
 
 .success__message{
-    margin-block: 100px;
+    margin-block: 20px;
     width: fit-content;
     background: var(--c-green);
     padding: 10px;

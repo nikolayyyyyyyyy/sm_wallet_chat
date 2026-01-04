@@ -77,7 +77,7 @@ class TransactionController extends Controller
         $account_sender->save();
         $account_receiver->save();
 
-        $transaction = Transaction::create([
+        Transaction::create([
             'amount' => $request->amount,
             'note' => $request->note,
             'transaction_type_id' => $request->transaction_type_id,
