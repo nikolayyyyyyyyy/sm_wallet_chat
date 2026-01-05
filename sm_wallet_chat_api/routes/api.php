@@ -61,6 +61,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/favorites-all', [FavoriteController::class, 'getFavoriteUsers']);
 
     // Transaction Type
+    Route::post('/transaction-types/{id}/update', [TransactionTypeController::class, 'updateTransactionType']);
+    Route::get('/transaction-types/{id}', [TransactionTypeController::class, 'getTransactionType']);
+    Route::delete('/transaction-types/{id}/delete', [TransactionTypeController::class, 'deleteTransactionType']);
     Route::post('/transaction-types', [TransactionTypeController::class, 'storeTransactionType']);
     Route::get('/transaction-types', [TransactionTypeController::class, 'getTransactionTypes']);
     

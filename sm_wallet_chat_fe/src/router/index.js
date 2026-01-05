@@ -18,6 +18,8 @@ import Currencies from '@/pages/admin/Lists/Currencies.vue'
 import CurrencyUpdate from '@/pages/admin/Update/CurrencyUpdate.vue'
 import AccountTypes from '@/pages/admin/Lists/AccountTypes.vue'
 import AccountTypeUpdate from '@/pages/admin/Update/AccountTypeUpdate.vue'
+import TransactionTypes from '@/pages/admin/Lists/TransactionTypes.vue'
+import TransactionTypeUpdate from '@/pages/admin/Update/TransactionTypeUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,7 +42,9 @@ const router = createRouter({
     { path: '/currencies', component: Currencies},
     { path: '/currency/:id', name: 'currency.update', component: CurrencyUpdate, props: true},
     { path: '/account-types', component: AccountTypes },
-    { path: '/account-type/:id', name: 'account_type.update', component: AccountTypeUpdate, props: true}
+    { path: '/account-type/:id', name: 'account_type.update', component: AccountTypeUpdate, props: true},
+    { path: '/transaction-types', component: TransactionTypes },
+    { path: '/transaction-types/:id', name: 'transaction_type.update', component: TransactionTypeUpdate, props: true }
   ],
 })
 
