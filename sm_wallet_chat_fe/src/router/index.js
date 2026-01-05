@@ -1,7 +1,7 @@
-import User from '@/pages/admin/User.vue'
-import AccountType from '@/pages/admin/AccountType.vue'
-import Currency from '@/pages/admin/Currency.vue'
-import TransactionType from '@/pages/admin/TransactionType.vue'
+import User from '@/pages/admin/Create/User.vue'
+import AccountType from '@/pages/admin/Create/AccountType.vue'
+import Currency from '@/pages/admin/Create/Currency.vue'
+import TransactionType from '@/pages/admin/Create/TransactionType.vue'
 import Login from '@/pages/auth/Login.vue'
 import Logout from '@/pages/auth/Logout.vue'
 import Register from '@/pages/auth/Register.vue'
@@ -12,8 +12,12 @@ import Home from '@/pages/user/Home.vue'
 import Profile from '@/pages/user/Profile.vue'
 import SendMoney from '@/pages/user/SendMoney.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import Account from '@/pages/admin/Account.vue'
-import Transaction from '@/pages/admin/Transaction.vue'
+import Account from '@/pages/admin/Create/Account.vue'
+import Transaction from '@/pages/admin/Create/Transaction.vue'
+import Currencies from '@/pages/admin/Lists/Currencies.vue'
+import CurrencyUpdate from '@/pages/admin/Update/CurrencyUpdate.vue'
+import AccountTypes from '@/pages/admin/Lists/AccountTypes.vue'
+import AccountTypeUpdate from '@/pages/admin/Update/AccountTypeUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,12 +31,16 @@ const router = createRouter({
     { path: '/chat/:id', name: 'users.chat', component: Chat, props: true },
     { path: '/send-money', component: SendMoney, props: true },
     { path: '/account/:id/transactions', name: 'account.trasnactions' , component: AccountTransactions, props: true },
-    { path: '/currency', component: Currency },
+    { path: '/currency', component: Currency},
     { path: '/account-type', component: AccountType },
     { path: '/transaction-type', component: TransactionType },
-    { path: '/users', component: User },
-    { path: '/accounts', component: Account },
-    { path: '/transactions', component: Transaction }
+    { path: '/user', component: User },
+    { path: '/account', component: Account },
+    { path: '/transaction', component: Transaction },
+    { path: '/currencies', component: Currencies},
+    { path: '/currency/:id', name: 'currency.update', component: CurrencyUpdate, props: true},
+    { path: '/account-types', component: AccountTypes },
+    { path: '/account-type/:id', name: 'account_type.update', component: AccountTypeUpdate, props: true}
   ],
 })
 

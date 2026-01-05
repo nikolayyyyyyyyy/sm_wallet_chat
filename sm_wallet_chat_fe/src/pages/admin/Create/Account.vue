@@ -7,7 +7,8 @@ import Select from '@/components/Select.vue';
 import { store } from '@/crud/create';
 import get from '@/crud/get';
 import { onMounted, ref } from 'vue';
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const { getData } = get();
 const account = ref({
     account_number: '',
@@ -47,6 +48,11 @@ const storeAccount = async () => {
 };
 
 onMounted(async () =>{
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+
     is_loading.value = true;
     currencies.value = (await getData('currencies'))
         .map(c => { return { id: c.id, text: c.currency }; });

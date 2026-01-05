@@ -3,11 +3,17 @@ import Load from '@/components/Load.vue';
 import Admin from '@/layouts/Admin.vue';
 import User from '@/layouts/User.vue';
 import { onMounted, ref } from 'vue';
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const user = ref();
 const is_loading = ref(false);
 
 onMounted(async () => {
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+
     is_loading.value = true;
     user.value = await (await fetch('http://127.0.0.1:8000/api/user',{
         method: 'GET',

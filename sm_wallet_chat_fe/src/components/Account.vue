@@ -38,17 +38,29 @@ defineProps({
         </div>
 
         <div class="section__amount">
-            <p>Наличност</p>
-            <p>${{ account.amount }}</p>
+            <p>Наличност:</p>
+            <div class="section__money">
+                <span v-if="account.currency.currency == 'USD'">$</span>
+                <p>{{ account.amount }}</p>
+                <span v-if="account.currency.currency == 'BGN'">лв.</span>
+                <span v-if="account.currency.currency == 'GRB'">grb.</span>
+                <span v-if="account.currency.currency == 'LEI'">lei.</span>
+            </div>
         </div>
 
         <div class="section__interest">
-            <p>Лихва</p>
-            <p>{{ account.interest }}$</p>
+            <p>Лихва:</p>
+            <div class="section__money">
+                <span v-if="account.currency.currency == 'USD'">$</span>
+                    <p>{{ account.interest }}</p>
+                <span v-if="account.currency.currency == 'BGN'">лв.</span>
+                <span v-if="account.currency.currency == 'GRB'">grb.</span>
+                <span v-if="account.currency.currency == 'LEI'">lei.</span>
+            </div>
         </div>
 
         <div class="section__account_number">
-            <p>Номер на сметка</p>
+            <p>Номер на сметка:</p>
             <p>{{ account.account_number }}</p>
         </div>
     </div>
@@ -68,6 +80,12 @@ defineProps({
     border-radius: 12px;
     min-width: 300px;
     border: 1px solid var(--c-gray);
+
+    .section__money{
+        display: flex;
+        align-items: center;
+        gap: 2px;
+    }
 
     .section__account_number,
     .section__interest,

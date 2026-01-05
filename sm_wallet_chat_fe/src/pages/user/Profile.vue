@@ -70,6 +70,11 @@ const updateInfo = async () => {
 };
 
 onMounted(async () => {
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+    
     is_loading.value = true;
     user.value = await (await fetch('http://127.0.0.1:8000/api/user',{
         method: 'GET',

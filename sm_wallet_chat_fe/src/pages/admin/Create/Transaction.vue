@@ -8,7 +8,8 @@ import TextArea from '@/components/TextArea.vue';
 import { store } from '@/crud/create';
 import get from '@/crud/get';
 import { onMounted, ref } from 'vue';
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const errors = ref();
 const { create } = store();
 const transaction = ref({
@@ -63,6 +64,11 @@ const store_transaction = async () => {
 }
 
 onMounted(async () => {
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+    
     is_loading.value = true;
     
     transaction_types.value = await getData('transaction-types');

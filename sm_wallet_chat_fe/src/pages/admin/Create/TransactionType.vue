@@ -3,8 +3,9 @@ import Button from '@/components/Button.vue';
 import GoToArrow from '@/components/GoToArrow.vue';
 import InputComponent from '@/components/InputComponent.vue';
 import { store } from '@/crud/create';
-import { ref } from 'vue';
-
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const transaction_type = ref();
 const error = ref();
 const is_fetching = ref(false);
@@ -30,6 +31,13 @@ const store_transaction_type = async () => {
         is_fetching.value = false;
     }
 };
+
+onMounted(() => {
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+});
 </script>
 
 <template>

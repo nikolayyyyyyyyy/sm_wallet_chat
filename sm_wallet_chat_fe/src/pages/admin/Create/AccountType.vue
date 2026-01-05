@@ -3,8 +3,9 @@ import Button from '@/components/Button.vue';
 import GoToArrow from '@/components/GoToArrow.vue';
 import InputComponent from '@/components/InputComponent.vue';
 import { store } from '@/crud/create';
-import { ref } from 'vue';
-
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const account_type = ref();
 const is_fetching = ref(false);
 const success_message = ref(false);
@@ -29,6 +30,13 @@ const store_account_type = async () => {
         is_fetching.value = false;
     }
 };
+
+onMounted(() =>{
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+});
 </script>
 
 <template>
@@ -40,13 +48,13 @@ const store_account_type = async () => {
                 <h1>Добавяне на тип на сметка</h1>
             </div>
 
-            <form @click.prevent="store_account_type" class="section__account__type custom-form">
+            <form @submit.prevent="store_account_type" class="section__account__type custom-form">
                 <InputComponent label="тип на сметка" v-model="account_type" :error/>
 
                 <Button type="submit" text="Добави" class="btn" />
             </form>
 
-            <p v-if="success_message" class="success__message">Успешно добавена тип транзакция.</p>
+            <p v-if="success_message" class="success__message">Успешно добавена тип сметка.</p>
         </div>
     </section>
 </template>

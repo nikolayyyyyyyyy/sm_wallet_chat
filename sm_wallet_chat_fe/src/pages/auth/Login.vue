@@ -2,7 +2,7 @@
 import Button from '@/components/Button.vue';
 import InputComponent from '@/components/InputComponent.vue';
 import auth from '@/crud/auth';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
@@ -28,6 +28,13 @@ const loginUser = async () => {
         }
     }
 };
+
+onMounted(() => {
+    if(localStorage.getItem('token')){
+        router.push('/');
+        return;
+    }
+});
 </script>
 
 <template>
@@ -39,7 +46,7 @@ const loginUser = async () => {
 
         <form @submit.prevent="loginUser" class="section__form custom-form">
             <InputComponent label="имейл" v-model="user.email" :error="errors?.email?.[0]" />
-
+            
             <InputComponent label="парола" v-model="user.password" :error="errors?.password?.[0]"/>
 
             <div class="form-bottom">

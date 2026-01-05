@@ -4,9 +4,10 @@ import Load from '@/components/Load.vue';
 import NoResultFount from '@/components/NoResultFount.vue';
 import User from '@/components/User.vue';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 const liked_users = ref([]);
 const is_loading = ref(false);
-
+const router = useRouter();
 onMounted(async () => {
     is_loading.value = true;
     liked_users.value = await (await fetch('http://127.0.0.1:8000/api/favorites-all', {
@@ -17,6 +18,13 @@ onMounted(async () => {
         }
     })).json();
     is_loading.value = false;
+});
+
+onMounted(() => {
+if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
 });
 </script>
 

@@ -34,6 +34,11 @@
     object-fit: cover;
 }
 
+.update__link{
+    background: transparent;
+    width: 100%;
+}
+
 :root {
     --font-weight-base: 400;
     --ff-base: 'Inter';

@@ -10,9 +10,9 @@ const props = defineProps({
 <template>
     <section class="section-my-accounts custom-form">
         <div class="section__head">
-            <p class="section__text">Total Balance</p>
+            <p class="section__text">Total Balance:</p>
 
-            <p class="section__amount">${{ total_price }}</p>
+            <p class="section__amount">{{ total_price }}</p>
         </div>
 
         <div class="section__accounts">
@@ -42,7 +42,6 @@ const props = defineProps({
     .section__head {
         display: flex;
         flex-direction: column;
-        gap: 8px;
     }
 
     .section__text {

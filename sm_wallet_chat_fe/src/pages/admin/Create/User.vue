@@ -5,8 +5,9 @@ import InputComponent from '@/components/InputComponent.vue';
 import Load from '@/components/Load.vue';
 import Select from '@/components/Select.vue';
 import { store } from '@/crud/create';
-import { ref } from 'vue';
-
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const { create } = store();
 const errors = ref();
 const success_message = ref(false);
@@ -39,6 +40,13 @@ const storeUser = async () => {
         is_fetching.value = false;
     }
 }
+
+onMounted(() =>{
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+});
 </script>
 
 <template>

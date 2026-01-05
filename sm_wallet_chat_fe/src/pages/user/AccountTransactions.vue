@@ -4,13 +4,13 @@ import GoToArrow from '@/components/GoToArrow.vue';
 import Load from '@/components/Load.vue';
 import get from '@/crud/get';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const props = defineProps({
     id:{
         required: true
     }
 });
-
+const router = useRouter();
 const route = useRoute();
 const account = ref();
 const index = route.query.index;
@@ -19,6 +19,11 @@ const is_loading = ref(false);
 const transactions = ref([]);
 
 onMounted(async () => {
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+
     is_loading.value = true;
     account.value = await getItem('accounts', props.id);
 

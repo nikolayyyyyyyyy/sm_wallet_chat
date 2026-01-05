@@ -5,7 +5,8 @@ import Load from '@/components/Load.vue';
 import get from '@/crud/get';
 import { onMounted, ref } from 'vue';
 import { echo } from '@/echo';
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const props = defineProps({
     id:{
         required: true
@@ -36,7 +37,12 @@ const sendMessage = async () => {
     messages.value.push(new_message);
 };
 
-onMounted(async () => { 
+onMounted(async () => {
+    if(!localStorage.getItem('token')){
+        router.push('/login');
+        return;
+    }
+
     is_loading.value = true;
 
     favorite_user.value = await getItem('users', props.id);

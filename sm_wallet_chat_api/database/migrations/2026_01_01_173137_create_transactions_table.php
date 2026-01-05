@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->decimal('amount', 15, 2);
             $table->string('note')->nullable(true);
 
-            $table->foreignId('transaction_type_id')->constrained('transaction_types');
-            $table->foreignId('account_sender_id')->constrained('accounts');
-            $table->foreignId('account_receiver_id')->constrained('accounts');
+            $table->foreignId('transaction_type_id')->constrained('transaction_types')->cascadeOnDelete();;
+            $table->foreignId('account_sender_id')->constrained('accounts')->cascadeOnDelete();;
+            $table->foreignId('account_receiver_id')->constrained('accounts')->cascadeOnDelete();;
         });
     }
 
