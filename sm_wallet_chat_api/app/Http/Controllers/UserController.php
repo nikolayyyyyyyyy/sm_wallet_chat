@@ -148,6 +148,11 @@ class UserController extends Controller
 
         $user = User::where('email', $request->input('email'))
             ->first();
+        if($user->id == $request->user()->id){
+            return response()->json([
+                'error' => 'Не може да харесаш себе си.'
+            ], 422);
+        }
 
         if (!$user) {
             return response()->json([

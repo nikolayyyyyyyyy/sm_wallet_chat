@@ -24,6 +24,7 @@ const search_user = ref({
 });
 const error = ref('');
 const found_user = ref(null);
+const self_err = ref('');
 const findUser = async () => {
     if(is_fetching.value) return;
     is_fetching.value = true;
@@ -44,7 +45,13 @@ const findUser = async () => {
         error.value = '';
     }else {
         const err = await response.json();
-        error.value = err.errors;
+        if(err.errors){
+            error.value = err.errors;
+            self_err.value = '';
+        }else{
+            self_err.value = err.error;
+            error.value = '';
+        }
     }
     is_loading.value = false;
     is_fetching.value = false;
@@ -54,6 +61,7 @@ function clearForm(){
     found_user.value = null;
     search_user.value.email = '';
     error.value = '';
+    self_err.value = '';
 }
 </script>
 
@@ -85,6 +93,7 @@ function clearForm(){
                 <User v-if="found_user && !is_loading && !error" :user="found_user" />
                 
                 <p v-if="error?.email && !is_loading" class="error__message">{{ error.email[0] }}</p>
+                <p v-if="!is_loading && self_err" class="error__message">{{ self_err }}</p>
 
                 <Button v-if="!is_loading" @click="findUser" class="search_btn" text="Намери"/>
 
