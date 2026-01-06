@@ -23,6 +23,9 @@ import TransactionTypeUpdate from '@/pages/admin/Update/TransactionTypeUpdate.vu
 import Users from '@/pages/admin/Lists/Users.vue'
 import UserUpdate from '@/pages/admin/Update/UserUpdate.vue'
 import Accounts from '@/pages/admin/Lists/Accounts.vue'
+import AccountUpdate from '@/pages/admin/Update/AccountUpdate.vue'
+import Transactions from '@/pages/admin/Lists/Transactions.vue'
+import TransactionUpdate from '@/pages/admin/Update/TransactionUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,7 +53,10 @@ const router = createRouter({
     { path: '/transaction-types/:id', name: 'transaction_type.update', component: TransactionTypeUpdate, props: true },
     { path: '/users', component: Users },
     { path: '/users/:id/update', name: 'user.update', component: UserUpdate, props: true },
-    { path: '/accounts', component: Accounts }
+    { path: '/accounts', component: Accounts },
+    { path: '/account/:id', name: 'account.update', component: AccountUpdate, props: true },
+    { path: '/transactions', component: Transactions },
+    { path: '/transaction/:id', name: 'transaction.update', component: TransactionUpdate, props: true }
   ],
 })
 

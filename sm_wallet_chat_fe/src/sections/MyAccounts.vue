@@ -27,15 +27,26 @@ const props = defineProps({
     flex-direction: column;
     gap: 20px;
 
-    .section__accounts {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        align-items: stretch;
-    
-        & > * {
-            flex: 0 0 calc((100% - 60px) / 4);
-            box-sizing: border-box;
+    .section__accounts{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media screen and (max-width: 1275px) {
+        .section__accounts{
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        .section__accounts{
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media screen and (max-width: 675px) {
+        .section__accounts{
+            grid-template-columns: 1fr;
         }
     }
 

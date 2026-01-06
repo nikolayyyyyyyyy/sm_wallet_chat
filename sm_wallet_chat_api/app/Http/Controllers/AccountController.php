@@ -8,6 +8,79 @@ use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
+    public function deleteAccount(string $id)
+    {
+        $account = Account::where('id', '=', $id)->first();
+        if($account == null)
+        {
+            return response()->json([
+                'error_message' => 'No account with this id found.'
+            ]);
+        }
+
+        $account->delete();
+
+        return response()->json(status: 204);
+    }
+
+    public function getAccounts()
+    {
+        $accounts = Account::orderBy('id', 'desc')
+            ->with(['currency','account_type','user'])
+            ->get();
+        if(!$accounts){
+            return response()->json([
+                'errors' => 'No accounts found.'
+            ]);
+        }
+        
+        return response()->json($accounts, 200);
+    }
+
+    public function updateAccount(Request $request, string $id)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'account_number' => 'required|string|size:10|unique:accounts,account_number,' .$id,
+                'amount' => 'required|numeric',
+                'interest' => 'required|numeric'
+            ],
+            [
+                'account_number.required' => 'Полето е задължително.',
+                'account_number.size' => 'Полето трябва да бъде точно 10 символа.',
+                'account_number.unique' => 'Акаунт с този номер вече съществува.',
+                'amount.required' => 'Полето е задължително.',
+                'amount.numeric' => 'Полето трябва да бъде числова стойност.',
+                'interest.required' => 'Полето е задължително.',
+                'interest.numeric' => 'Полето трябва да бъде числова стойност.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $account = Account::where('id', '=', $id)->first();
+        if($account == null)
+        {
+            return response()->json([
+                'error' => 'No account with this id found.'
+            ]);
+        }
+
+        $account->account_number = $request->account_number;
+        $account->amount = $request->amount;
+        $account->interest = $request->interest;
+        $account->currency_id = $request->currency_id;
+        $account->account_type_id = $request->account_type_id;
+        $account->user_id = $request->user_id;
+
+        $account->save();
+
+        return response()->json(status: 201);
+    }
+
     public function storeAccount(Request $request)
     {
         $validator = Validator::make(

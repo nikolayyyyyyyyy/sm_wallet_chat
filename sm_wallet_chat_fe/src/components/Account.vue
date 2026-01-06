@@ -74,11 +74,8 @@ defineProps({
     font-size: 14px;
     font-weight: 400;
     color: var(--c-white);
-    flex: 0 0 calc((100% - 40px) / 4);
-    box-sizing: border-box;
     padding: 16px;
     border-radius: 12px;
-    min-width: 300px;
     border: 1px solid var(--c-gray);
 
     .section__money{

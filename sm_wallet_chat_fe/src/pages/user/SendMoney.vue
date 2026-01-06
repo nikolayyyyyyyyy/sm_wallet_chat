@@ -181,10 +181,36 @@ onMounted(async () => {
         gap: 50px;
     }
 
+    @media screen and (max-width: 900px) {
+        .section__content{
+            flex-direction: column;
+        }
+
+        .section__account__info{
+            width: 100%;
+        }
+
+        .section__account__info-top{
+            width: 100%;
+        }
+    }
+
     .section__cards{
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    @media screen and (max-width: 1400px) {
+        .section__cards{
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media screen and (max-width: 1140px) {
+        .section__cards{
+            grid-template-columns: 1fr;
+        }
     }
 
     .content__card{

@@ -45,8 +45,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/currencies', [CurrencyController::class, 'storeCurrency']);
 
     // Account
+    Route::get('/accounts', [AccountController::class, 'getAccounts']);
     Route::get('/accounts/{id}', [AccountController::class, 'getAccount']);
     Route::post('/accounts', [AccountController::class, 'storeAccount']);
+    Route::delete('/accounts/{id}/delete', [AccountController::class, 'deleteAccount']);
+    Route::post('/accounts/{id}/update', [AccountController::class, 'updateAccount']);
 
     //User
     Route::get('/users', [UserController::class, 'getUsers']);
@@ -68,8 +71,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/transaction-types', [TransactionTypeController::class, 'getTransactionTypes']);
     
     // Transaction
+    Route::post('/transactions/{id}/update', [TransactionController::class, 'updateTransaction']);
+    Route::get('/transactions/{id}', [TransactionController::class, 'getTransaction']);
+    Route::delete('/transactions/{id}/delete', [TransactionController::class, 'deleteTransaction']);
     Route::get('/transactions/{id}/account', [TransactionController::class, 'getTransactionsForAccount']);
     Route::post('/transactions', [TransactionController::class, 'storeTransaction']);
+    Route::get('/transactions', [TransactionController::class, 'getTransactions']);
 
     //Logout
     Route::post('/logout', [AuthController::class, 'logout']);

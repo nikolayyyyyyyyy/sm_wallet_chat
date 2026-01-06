@@ -88,6 +88,7 @@ body {
 h1{
     font-size: 30px;
     color: var(--c-gray);
+    text-align: center;
 }
 
 .error__message{ 
