@@ -6,6 +6,7 @@ import get from '@/crud/get';
 import { onMounted, ref } from 'vue';
 import { echo } from '@/echo';
 import { useRouter } from 'vue-router';
+import Button from '@/components/Button.vue';
 const router = useRouter();
 const props = defineProps({
     id:{
@@ -97,13 +98,20 @@ onMounted(async () => {
                         <p>
                             {{ message.message }}
                         </p>
+
+                        <p v-if="message.sender_id == current_user.id" class="date-sender">
+                           send: {{ new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
+                        </p>
+                        <p v-else class="date-receiver">
+                           send: {{ new Date(message.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}
+                        </p>
                     </div>
                 </div>
 
                 <form class="send_message" @submit.prevent="sendMessage">
                     <InputComponent class="message_text" v-model="message"/>
 
-                    <input type="submit">
+                    <Button type="submit" text=">" :text_send_button="true" />
                 </form>
             </div>
 
@@ -115,6 +123,22 @@ onMounted(async () => {
 <style scoped lang="scss">
 .section-chat{
     margin-block: 32px;
+
+    .typing-indicator {
+        font-size: 12px;
+        opacity: .7;
+    }
+
+    .date-sender,
+    .date-receiver{
+        font-size: 12px;
+        color: var(--c-gray);
+        opacity: 0.6;
+    }
+
+    .date-sender{
+        margin-left: auto;
+    }
 
     .send_message{
         display: flex;
@@ -166,7 +190,10 @@ onMounted(async () => {
             flex-direction: column;
             padding: 3px 6px;
             width: fit-content;
-            background: var(--c-base);
+            background: var(--c-blue);
+            color: var(--c-white);
+            font-size: 16px;
+            font-weight: 300 !important;
         }
 
         .sender{

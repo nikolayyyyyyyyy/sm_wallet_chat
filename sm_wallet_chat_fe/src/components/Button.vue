@@ -11,12 +11,16 @@ defineProps({
     type: {
         type: String,
         required: false
+    },
+    text_send_button:{
+        type:Boolean,
+        required: false
     }
 });
 </script>
 
 <template>
-    <button class="btn" :type :class="{ 'btn--delete': delete_btn }">
+    <button class="btn" :type :class="{ 'btn--delete': delete_btn, 'text-send-btn': text_send_button }">
         {{ text }}
     </button>
 </template>
@@ -36,5 +40,14 @@ defineProps({
 
 .btn--delete {
     background-color: var(--c-red);
+}
+
+.text-send-btn{
+    width: 50px;
+    border-radius: 10px;
+    
+    &:hover{
+        background: var(--c-base);
+    }
 }
 </style>
