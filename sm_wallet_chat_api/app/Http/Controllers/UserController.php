@@ -12,7 +12,15 @@ class UserController extends Controller
 {
     public function getUsers()
     {
-        $users = User::all();
+        $users = User::orderBy('id', 'desc')
+            ->get()
+            ->map(function ($user) {
+                $user->profile_photo = $user->profile_photo
+                    ? asset($user->profile_photo)
+                    : null;
+
+                return $user;
+            });
 
         return response()->json($users, 200);
     }
@@ -52,6 +60,7 @@ class UserController extends Controller
             'id' => $user->id,
             'username' => $user->username,
             'email' => $user->email,
+            'role_id' => $user->role_id,
             'profile_photo' => $user->profile_photo != null ? asset($user->profile_photo) : null
         ], 200);
     }
@@ -78,13 +87,15 @@ class UserController extends Controller
             'username' => 'required|string|max:20',
             'email' => 'required|max:30|email|unique:users,email,' . $id,
             'profile_picture' => 'nullable|image|max:2048',
+            'role_id' => 'sometimes|required',
             'password' => 'nullable|min:6'
         ], [
             'username' => 'Полето е задължително.',
             'username.max' => 'Полето трябва да е до 20 символа.',
             'email.required' => 'Полето е задължително.',
             'email.unique' => 'Има запис с този имейл.',
-            'email.email' => 'Невалиден имейл.'
+            'email.email' => 'Невалиден имейл.',
+            'password.min' => 'Полето трябва да е поне 6 символа.'
         ]);
 
         if ($validator->fails()) {
@@ -105,7 +116,7 @@ class UserController extends Controller
                 ->store('profile_pictures', 'public');
             $user->profile_photo = Storage::url($path);
         } else {
-            if ($user->profile_photo) {
+            if ($user->profile_photo && $request->profile_photo == 'null') {
                 $oldPath = str_replace('/storage/', '', $user->profile_photo);
                 Storage::disk('public')->delete($oldPath);
                 $user->profile_photo = null;

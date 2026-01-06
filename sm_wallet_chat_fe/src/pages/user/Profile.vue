@@ -42,6 +42,7 @@ function removeImage(){
 const updateInfo = async () => {
     if(is_fetching.value) return;
     const form_data = new FormData();
+    form_data.append('profile_photo', file_image_url.value);
     form_data.append('username', user.value.username);
     form_data.append('email', user.value.email);
     if (new_password.value) {

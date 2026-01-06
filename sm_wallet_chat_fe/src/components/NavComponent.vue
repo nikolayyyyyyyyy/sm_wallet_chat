@@ -5,7 +5,7 @@ const  { is_logged }  = auth();
 </script>
 
 <template>
-    <nav class="nav">
+    <div class="nav shell">
         <RouterLink v-if="is_logged" to="/">
             Начало
         </RouterLink>
@@ -18,7 +18,7 @@ const  { is_logged }  = auth();
         <RouterLink class="logout" v-if="is_logged" to="/logout">
             Изход
         </RouterLink>
-    </nav>
+    </div>
 </template>
 
 <style scoped lang="scss">
