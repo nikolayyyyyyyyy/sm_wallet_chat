@@ -14,8 +14,5 @@ export const echo = new Echo({
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             Accept: 'application/json',
         },
-    },
-
-
-    
+    }
 });
