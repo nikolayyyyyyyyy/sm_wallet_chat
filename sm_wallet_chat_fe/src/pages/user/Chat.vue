@@ -22,7 +22,7 @@ const { getItem } = get();
 const current_user = ref();
 
 const sendMessage = async () => {
-    if(message.value == '') return;
+    if(message.value == undefined || message.value == '') return;
 
     const response = await fetch('http://127.0.0.1:8000/api/messages/' + props.id,{
         method: 'POST',
@@ -159,7 +159,7 @@ onMounted(async () => {
         display: flex;
         flex-direction: column;
         gap: 12px;
-        width: 70%;
+        width: 60%;
         align-self: center;
     }
 
@@ -189,6 +189,7 @@ onMounted(async () => {
             display: flex;
             flex-direction: column;
             padding: 3px 6px;
+            justify-content: flex-end;
             width: fit-content;
             background: var(--c-blue);
             color: var(--c-white);

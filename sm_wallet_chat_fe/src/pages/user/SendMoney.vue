@@ -130,7 +130,7 @@ onMounted(async () => {
                     </label>
                 </div>
 
-                <form @submit.prevent="sendMoney" class="section__account__info">
+                <form @submit.prevent="sendMoney" class="section__account__info custom-form">
                     <div class="account__info-top">
                         <InputComponent :error="errors?.account_receiver_number?.[0]" label="сметка на получател" v-model="transaction.account_receiver_number"/>
 

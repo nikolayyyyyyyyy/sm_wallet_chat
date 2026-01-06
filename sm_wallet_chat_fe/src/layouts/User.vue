@@ -43,6 +43,7 @@ const findUser = async () => {
     if(response.ok){
         found_user.value = await response.json();
         error.value = '';
+        self_err.value = '';
     }else {
         const err = await response.json();
         if(err.errors){
